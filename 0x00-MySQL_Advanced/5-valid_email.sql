@@ -6,5 +6,4 @@ BEGIN
 		THEN
 		SET valid_email = 0;
 	END IF;
-END;
-$$
+END;$$
