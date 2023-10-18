@@ -1,4 +1,4 @@
---Compute the average score for a student
+-- Compute the average score for a student
 DELIMITER $$
 DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 CREATE PROCEDURE ComputeAverageScoreForUser(IN user_id INT)
