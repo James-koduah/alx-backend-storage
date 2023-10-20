@@ -2,7 +2,8 @@
 """Engage with database of nginx logs"""
 import pymongo
 
-def logs():
+
+def main():
     """Engage with database of nginx logs"""
     client = pymongo.MongoClient('mongodb://127.0.0.1:27017')
     database = client.logs.nginx
@@ -18,4 +19,4 @@ def logs():
 
 
 if __name__ == '__main__':
-    logs()
+    main()
