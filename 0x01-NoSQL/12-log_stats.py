@@ -8,7 +8,7 @@ def logs():
     database = client.logs.nginx
     
     print("{} logs".format(database.count_documents({})))
-    print('\tMethods:')
+    print('Methods:')
     print('\tmethod GET: {}'.format(database.count_documents({'method': 'GET'})))
     print('\tmethod POST: {}'.format(database.count_documents({'method': 'POST'})))
     print('\tmethod PUT: {}'.format(database.count_documents({'method': 'PUT'})))
