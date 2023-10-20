@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Engage with database of nginx logs"""
 import pymongo
 
