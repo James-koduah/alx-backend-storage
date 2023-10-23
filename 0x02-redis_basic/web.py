@@ -9,7 +9,7 @@ def get_page(url: str) -> str:
     cache = r.get(f"cache:{url}")
     if cache:
         return cache.decode('utf-8')
-    html = requsts.get(url).text
     r.incr(f"count:{url}")
+    html = requsts.get(url).text
     r.setex(f"cache:{url}", 10, html)
     return html
