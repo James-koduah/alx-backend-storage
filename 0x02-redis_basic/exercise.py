@@ -16,16 +16,19 @@ class Cache():
         self._redis.set(key, data)
         return key
 
-    def get(self, key, fn):
+    def get(self,
+            key: str,
+            fn: typing.Optional[typing.Callable]) -> typing.Union[
+                    str, bytes, int, float]:
         value = self._redis.get(key)
         if fn is not None:
             value = fn(value)
         return value
 
-    def get_str(self, key):
+    def get_str(self, key: str) -> str:
         value = self._redis.get(key)
         return str(value)
 
-    def get_int(self, key):
+    def get_int(self, key: str) -> int:
         value = self._redis.get(key)
         return int(value)
