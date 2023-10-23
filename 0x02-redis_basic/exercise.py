@@ -59,6 +59,7 @@ class Cache():
     @count_calls
     @call_history
     def store(self, data: typing.Union[str, bytes, int, float]) -> str:
+        """store a value with a random generated key"""
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
@@ -67,13 +68,16 @@ class Cache():
             key: str,
             fn: typing.Optional[typing.Callable] = None) -> typing.Union[
                     str, bytes, int, float]:
+        """get value from redis database"""
         value = self._redis.get(key)
         if fn is not None:
             value = fn(value)
         return value
 
     def get_str(self, key: str) -> str:
+        """encapsulates the get function"""
         return self.get(key, str)
 
     def get_int(self, key: str) -> int:
+        """encapsulates the get function"""
         return self.get(key, int)
