@@ -7,6 +7,7 @@ from functools import wraps
 
 
 def count_calls(method: typing.Callable) -> typing.Callable:
+    """save number of times a function or method has been called to redis"""
     key = method.__qualname__
     @wraps(method)
     def wrap(self, *args, **kwargs):
@@ -14,10 +15,12 @@ def count_calls(method: typing.Callable) -> typing.Callable:
         return method(self, *args, **kwargs)
     return wrap
 
+
 def call_history(method: typing.Callable) -> typing.Callable:
+    """Save the inputs and outputs given to functions or methods to redis"""
     input_key = method.__qualname__ + ":inputs"
     output_key = method.__qualname__ + ":outputs"
-    
+
     @wraps(method)
     def wrap(self, *args, **kwargs):
         self._redis.rpush(input_key, str(args))
@@ -26,7 +29,9 @@ def call_history(method: typing.Callable) -> typing.Callable:
         return res
     return wrap
 
+
 def replay(method: typing.Callable):
+    """Get information about number of times a method has been called"""
     key = method.__qualname__
     input_key = method.__qualname__ + ":inputs"
     output_key = method.__qualname__ + ":outputs"
