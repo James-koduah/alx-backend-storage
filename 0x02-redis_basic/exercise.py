@@ -18,7 +18,7 @@ class Cache():
 
     def get(self,
             key: str,
-            fn: typing.Optional[typing.Callable]) -> typing.Union[
+            fn: typing.Optional[typing.Callable] = None) -> typing.Union[
                     str, bytes, int, float]:
         value = self._redis.get(key)
         if fn is not None:
