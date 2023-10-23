@@ -19,14 +19,14 @@ def cache_get_page(func):
         new_cache = func(url)
         r.setex(f'cache:{url}', 10, new_cache)
         return new_cache
+
     return wrap
 
 
 @cache_get_page
 def get_page(url: str) -> str:
     """get an html page"""
+
     num = r.incr(f"count:{url}")
     html = requests.get(url).text
     return html
-
-
