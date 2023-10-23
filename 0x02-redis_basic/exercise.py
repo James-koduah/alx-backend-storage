@@ -32,7 +32,7 @@ def replay(method):
     output_key = method.__qualname__ + ":outputs"
 
     cls = method.__self__
-    print("{} was called {} times".format(key, cls.get_int(key)))
+    print("{} was called {} times:".format(key, cls.get_int(key)))
 
     inputs = cls._redis.lrange(input_key, 0, -1)
     outputs = cls._redis.lrange(output_key, 0, -1)
