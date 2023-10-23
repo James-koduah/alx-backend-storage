@@ -26,6 +26,24 @@ def call_history(method: typing.Callable) -> typing.Callable:
         return res
     return wrap
 
+def replay(method):
+    key = method.__qualname__
+    input_key = method.__qualname__ + ":inputs"
+    output_key = method.__qualname__ + ":outputs"
+
+    cls = method.__self__
+    print("{} was called {} times".format(key, cls.get_int(key)))
+
+    inputs = cls._redis.lrange(input_key, 0, -1)
+    outputs = cls._redis.lrange(output_key, 0, -1)
+
+    for item in list(zip(inputs, outputs)):
+        print("{}(*{}) -> {}".format(
+              key,
+              item[0].decode("utf-8"),
+              item[1].decode("utf-8")
+              ))
+
 
 class Cache():
     """A Cache class using redis"""
