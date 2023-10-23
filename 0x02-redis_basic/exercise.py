@@ -3,6 +3,7 @@
 import redis
 import uuid
 import typing
+from functools import wraps
 
 
 def count_calls(method: typing.Callable) -> typing.Callable:
