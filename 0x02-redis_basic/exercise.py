@@ -26,7 +26,7 @@ def call_history(method: typing.Callable) -> typing.Callable:
         return res
     return wrap
 
-def replay(method):
+def replay(method: typing.Callable):
     key = method.__qualname__
     input_key = method.__qualname__ + ":inputs"
     output_key = method.__qualname__ + ":outputs"
