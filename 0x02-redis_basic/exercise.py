@@ -26,9 +26,7 @@ class Cache():
         return value
 
     def get_str(self, key: str) -> str:
-        value = self._redis.get(key)
-        return str(value)
+        return self.get(key, str)
 
     def get_int(self, key: str) -> int:
-        value = self._redis.get(key)
-        return int(value)
+        return self.get(key, int)
