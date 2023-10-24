@@ -1,32 +1,35 @@
 #!/usr/bin/env python3
-"""Obtain HTML content from a url and return it"""
+"""Module containing function to return HTML content of a particular URL"""
 import redis
 import requests
 from functools import wraps
 
-r = redis.Redis()
+data = redis.Redis()
 
 
-def cache_get_page(funct):
-    """wrapper function for get_page function"""
+def cached_content_fun(method):
+    """Function that returns html content"""
 
-    @wraps(funct)
-    def wrap(url: str):
-        old_cache = r.get(f"cache:{url}")
-        if old_cache:
-            return old_cache.decode("utf-8")
+    @wraps(method)
+    def wrapper(url: str):
+        cached_content = data.get(f"cached:{url}")
+        if cached_content:
+            return cached_content.decode('utf-8')
 
-        new_cache = funct(url)
-        r.setex(f'cache:{url}', 10, new_cache)
-        return new_cache
+        content = method(url)
+        data.setex(f"cached:{url}", 10, content)
+        return content
 
-    return wrap
+    return wrapper
 
 
-@cache_get_page
+@cached_content_fun
 def get_page(url: str) -> str:
-    """get an html page"""
+    """Function thattracks how many times a particular URL was accessed"""
 
-    num = r.incr(f"count:{url}")
-    html = requests.get(url).text
-    return html
+    count = data.incr(f"count:{url}")
+    content = requests.get(url).text
+    # print(content)
+    # print("Count: {}".format(count))
+    return content
+
